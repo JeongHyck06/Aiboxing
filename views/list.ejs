@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- <%= JSON.stringify(users) %> -->
+    <div class="white-bg">
+        <% for (var i = 0; i < users.length; i++){ %>
+
+            <div class="white-box">
+              <div class="list-box">
+              <h1><%= users[i].name %></h1>
+              <h3><%= users[i].studentId %></h3>
+              <p><%= users[i].score %></p>
+            </div>
+          
+          <% } %> 
+      </div> 
+</body>
+</html>

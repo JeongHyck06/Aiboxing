@@ -1,0 +1,49 @@
+        <form id="startForm" action="/startGame" method="POST">
+            <input type="text" id="name" name="name" placeholder="이름" required><br><br>
+            <input type="text" id="studentId" name="studentId" placeholder="학번" required><br><br>
+            <button type="submit" id="startButton">게임 시작</button>
+        </form>
+
+
+
+
+          // 이름과 학번이 비어있는지 확인
+  if (name.trim() === "" || studentId.trim() === "") {
+    alert("마! 니 이름 똑디 대라!");
+    return;
+  }
+});
+
+
+.container {
+    text-align: center;
+    background-color: #424242; /* 컨테이너의 배경색 */
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2); /* 그림자 효과 */
+}
+
+#startForm {
+    margin-bottom: 20px;
+}
+
+#startForm input[type="text"] {
+    width: 70%; /* 폼 너비 */
+    padding: 10px;
+    margin-bottom: 15px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px; /* 폰트 크기 */
+}
+
+
+
+#startButton:hover {
+    background-color: #ff6b6b; /* 호버 시 배경색 변경 */
+}
+
+/* 폼 입력 필드에 포커스가 있을 때 */
+#startForm input[type="text"]:focus {
+    outline: none;
+    box-shadow: 0px 0px 8px rgba(255, 255, 255, 0.6); /* 밝은 색상의 그림자 */
+}
