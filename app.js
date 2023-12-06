@@ -31,16 +31,27 @@ app.get("/game", function (req, res) {
 });
 
 app.get("/list", async (req, res) => {
-  let result = await db.collection("post").find().toArray();
+  try {
+    let result = await db
+      .collection("post")
+      .find()
+      .sort({ score: -1 }) // score를 기준으로 내림차순 정렬
+      .toArray();
 
-  res.render("list.ejs", { users: result });
+    res.render("list.ejs", { users: result });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server Error");
+  }
 });
-
 app.post("/resultGame", async (req, res) => {
+  const scoreAsNumber = parseInt(req.body.score, 10) || 0; // 문자열을 숫자로 변환
+
   await db.collection("post").insertOne({
     name: req.body.name,
     studentId: req.body.studentId,
-    score: req.body.score,
+    score: scoreAsNumber, // 숫자로 변환된 점수를 저장
   });
+
   res.redirect("/list");
 });
