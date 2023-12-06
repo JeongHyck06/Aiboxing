@@ -1,0 +1,42 @@
+.ranking-container {
+    background-color: #f9f9f9;
+    padding: 20px;
+    text-align: center;
+}
+
+.user-box {
+    border: 1px solid #424242;
+    margin-bottom: 20px;
+    padding: 15px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    width: 60%; /* 박스 너비 조정 */
+    margin: 20px auto; /* 중앙 정렬 */
+}
+
+.user-box:hover {
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+}
+
+.user-name {
+    font-size: 1.8em; /* 폰트 크기 증가 */
+    color: #333;
+    margin: 10px 0; /* 여백 추가 */
+}
+
+.user-id {
+    font-size: 1.2em; /* 폰트 크기 증가 */
+    color: #666;
+    margin: 5px 0; /* 여백 추가 */
+}
+
+.user-score {
+    font-size: 1.4em; /* 폰트 크기 증가 */
+    font-weight: bold; /* 굵은 글씨체 적용 */
+    color: #d35400; /* 색상 변경 */
+    padding: 5px 10px; /* 패딩 추가 */
+    margin: 5px 0; /* 여백 조정 */
+    background-color: #f9ebea; /* 배경색 추가 */
+    border-radius: 5px; /* 모서리 둥글게 */
+    display: inline-block; /* 배경색이 텍스트 영역에만 적용되도록 */
+}

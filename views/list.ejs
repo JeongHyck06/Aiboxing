@@ -2,22 +2,29 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/list.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
 <body>
     <!-- <%= JSON.stringify(users) %> -->
-    <div class="white-bg">
-        <% for (var i = 0; i < users.length; i++){ %>
-
-            <div class="white-box">
-              <div class="list-box">
-              <h1><%= users[i].name %></h1>
-              <h3><%= users[i].studentId %></h3>
-              <p><%= users[i].score %></p>
+    <div class="ranking-container">
+        <% for (var i = 0; i < users.length; i++) { %>
+            <div class="user-box">
+                <% if (i == 0) { %>
+                    <span class="crown">👑</span>
+                <% } else if (i == 1) { %>
+                    <span class="crown">👑</span>
+                <% } else if (i == 2) { %>
+                    <span class="crown">👑</span>
+                <% } %>
+                <h2 class="user-name"><%= users[i].name %></h2>
+                <p class="user-id"><%= users[i].studentId %></p>
+                <p class="user-score"><%= users[i].score %></p>
             </div>
-          
-          <% } %> 
-      </div> 
+            
+        <% } %> 
+    </div>
+    
 </body>
 </html>
