@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-const { MongoClient } = require("mongodb");
+const { MongoClient, ObjectId } = require("mongodb");
 app.use(express.static("public"));
 app.set("view engine", "ejs");
 app.use(express.json());
@@ -44,6 +44,7 @@ app.get("/list", async (req, res) => {
     res.status(500).send("Server Error");
   }
 });
+
 app.post("/resultGame", async (req, res) => {
   const scoreAsNumber = parseInt(req.body.score, 10) || 0; // 문자열을 숫자로 변환
 
@@ -54,4 +55,31 @@ app.post("/resultGame", async (req, res) => {
   });
 
   res.redirect("/list");
+});
+
+app.post("/deleteUser", async (req, res) => {
+  try {
+    await db
+      .collection("post")
+      .deleteOne({ _id: new ObjectId(req.body.userId) });
+  } catch (err) {
+    console.error(err);
+    res.json({ success: false });
+  }
+});
+
+app.post("/updateUser", async (req, res) => {
+  const { userId, name, studentId } = req.body;
+
+  try {
+    await db
+      .collection("post")
+      .updateOne(
+        { _id: new ObjectId(userId) },
+        { $set: { name: name, studentId: studentId } }
+      );
+    res.redirect("/list");
+  } catch (err) {
+    console.error(err);
+  }
 });
