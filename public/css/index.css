@@ -4,10 +4,12 @@ body {
     align-items: center;
     height: 100vh;
     margin: 0;
-    background-color: #333; /* 어두운 배경색 */
+    background-color: #333;
     color: #fff;
     font-family: Arial, sans-serif;
+    flex-direction: column; /* 콘텐츠를 세로로 정렬 */
 }
+
 
 #startButton {
     padding: 15px 30px;
@@ -52,4 +54,22 @@ body {
 #startForm input[type="text"]:focus {
     outline: none;
     box-shadow: 0px 0px 8px rgba(255, 255, 255, 0.6); /* 밝은 색상의 그림자 */
+}
+
+/* 바닥글 스타일 */
+footer {
+    text-align: center;
+    padding: 20px;
+    color: #fff;
+}
+
+a {
+    color: #4CAF50; /* 링크의 기본 색상을 녹색으로 설정 */
+    text-decoration: none; /* 밑줄 제거 */
+    transition: color 0.3s; /* 색상 변경 시 부드러운 전환 효과 */
+}
+
+/* 링크에 마우스를 올렸을 때 색상 변경 */
+a:hover {
+    color: #FFC107; /* 호버 시 색상을 황금색으로 변경 */
 }

@@ -73,7 +73,7 @@ async function init() {
 
   startPoseChallenge();
   startTimer();
-  setTimeout(endGame, 5000);
+  setTimeout(endGame, 3000);
 }
 
 // 타이머 시작을 처리하는 함수
