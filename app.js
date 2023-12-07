@@ -1,20 +1,20 @@
 const express = require("express");
 const app = express();
 const { MongoClient, ObjectId } = require("mongodb");
+require("dotenv").config();
 app.use(express.static("public"));
 app.set("view engine", "ejs");
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-let db;
-const url =
-  "mongodb+srv://admin:im5967im@aiboxingonline.ftd5xzt.mongodb.net/?retryWrites=true&w=majority";
 
-new MongoClient(url)
-  .connect()
+const url = process.env.DB_URL;
+
+let connectDB = require("./db/mongo.js");
+connectDB
   .then((client) => {
     console.log("DB연결성공");
     db = client.db("users");
-    app.listen(8080, () => {
+    app.listen(process.env.PORT, () => {
       console.log("http://localhost:8080 에서 서버 실행중");
     });
   })

@@ -1,4 +1,130 @@
-const URL = "https://teachablemachine.withgoogle.com/models/KJij0edsT/";
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- <link rel="stylesheet" href="/css/gameInterface.css"> -->
+  <title>그에게 복수하기 위해 복싱이나 배우렵니다</title>
+</head>
+<style>
+    body {
+    font-family: 'Arial', sans-serif;
+    text-align: center;
+    background-color:  #333;
+  }
+  #game-container {
+    margin: 0 auto;
+    width: 90%;
+    max-width: 800px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-top: 20px;
+    background-color: #3b3a3a; 
+  }
+  #canvas {
+    width: 100%;
+    background-color: #3b3a3a; 
+    margin-bottom: 10px;
+  }
+  #label-container {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 10px;
+  }
+  #pose-challenge {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #d1d1d1;
+    margin-bottom: 10px;
+  }
+  #score {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #d63031;
+    margin-bottom: 20px;
+  }
+  button {
+    padding: 10px 20px;
+    font-size: 1em;
+    margin-top: 3px;
+    margin-bottom: 15px;
+    cursor: pointer;
+    background-color: #d63031; /* 붉은색 배경 */
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    transition: background-color 0.3s;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+  }
+
+  .spinner {
+  border: 5px solid #f3f3f3; 
+  border-top: 5px solid #c11a1a;
+  width: 70px;
+  height: 70px;
+  animation: spin 2s linear infinite;
+  margin: auto;
+  /* margin-top: 20px; */
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+
+#result-container {
+    margin-bottom: 10px;
+    margin-top: 20px;
+
+}
+
+#result-container input[type="text"] {
+    width: 50%; /* 폼 너비 */
+    padding: 10px;
+    margin-bottom: 5px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px; /* 폰트 크기 */
+}
+
+
+#resulttButton:hover {
+    background-color: #ff6b6b; /* 호버 시 배경색 변경 */
+}
+
+/* 폼 입력 필드에 포커스가 있을 때 */
+#result-container input[type="text"]:focus {
+    outline: none;
+    box-shadow: 0px 0px 8px rgba(255, 255, 255, 0.6); /* 밝은 색상의 그림자 */
+}
+</style>
+<body>
+  <div id="game-container">
+    <h1 style="color: white;">복싱의 기본기를 단련하세요!</h1>
+    <button type="button" onclick="init()">게임 시작</button>
+    <div id="timer" style="font-size: 1.5em; color: #ffffff;">남은 시간: 5초</div>
+    <div id="pose-challenge"></div>
+    <div id="loading" style="display: none;"><div class="spinner"></div></div>
+    <div><canvas id="canvas"></canvas></div>
+  
+    <div id="score">점수: 0</div>
+    <div id="label-container"></div>
+    
+    <!-- <button id="redirect-button" style= "display: none;" onclick="redirectBasedOnScore()">결과보기</button> -->
+    
+    <form id="result-container" action="/resultGame" method="POST" style= "display: none;">
+        <input type="text" id="name" name="name" placeholder="이름" required><br><br>
+        <input type="text" id="studentId" name="studentId" placeholder="학번" required><br><br>
+        <button type="submit" id=resultButton">결과 보기</button>
+    </form>
+
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/pose@0.8/dist/teachablemachine-pose.min.js"></script>
+  <script>
+    const URL = "https://teachablemachine.withgoogle.com/models/KJij0edsT/";
 
 let model, webcam, ctx, labelContainer, maxPredictions;
 const poses = [
@@ -14,7 +140,7 @@ let currentPose = "";
 let score = 0;
 let poseInterval;
 let timer;
-let timeRemaining = 2;
+let timeRemaining = 5;
 let gameActive = false;
 
 // 포즈 챌린지를 시작하는 함수
@@ -35,9 +161,8 @@ function updateScore() {
   // 게임이 활성화된 상태일 때만 점수를 업데이트
   if (gameActive) {
     score += 1;
-    document.getElementById("score-display").innerText = "점수: " + score;
+    document.getElementById("score").innerText = "점수: " + score;
   }
-  console.log("업데이트 된 점수 : ", score);
 }
 
 // init 함수를 확장하여 새 요소들을 포함하도록 합니다.
@@ -103,8 +228,6 @@ function endGame() {
   document.getElementById("canvas").style.display = "none"; // 캔버스 숨기기
   document.getElementById("label-container").style.display = "none";
   document.getElementById("result-container").style.display = "block"; // 결과 보기 버튼 실행
-  document.getElementById("score").value = parseInt(score, 10);
-  console.log("폼에 설정된 점수: ", document.getElementById("score").value); // 설정된 값을 확인
 }
 
 function redirectBasedOnScore() {
@@ -151,3 +274,8 @@ function drawPose(pose) {
     }
   }
 }
+
+   </script>
+</body>
+
+</html>
